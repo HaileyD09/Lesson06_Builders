@@ -4,9 +4,10 @@ namespace TheWorld.GameMechanics;
 /// A player character.  Everything a character sheet says, one property per
 /// line.
 ///
-/// Built the Lesson 2 way:  the constructor is private, and the only way in is
-/// the factory method below, which checks every number before it lets one
-/// through.
+/// The constructor is private, and there are two doors in.  The public Create
+/// is Lesson 5's factory, which checks the numbers it's handed.  The internal
+/// Create is for PlayerBuilder, and it trusts the builder to have done the
+/// checking already.
 /// </summary>
 public record Player
 {

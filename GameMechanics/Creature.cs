@@ -3,8 +3,9 @@ namespace TheWorld.GameMechanics;
 /// <summary>
 /// Anything the players fight.  A goblin, a wolf, a dragon.
 ///
-/// Same rules as <see cref="Player"/>:  a private constructor, and one door in
-/// that checks every number.
+/// Still built the Lesson 5 way:  a private constructor, and one door in that
+/// checks every number.  <see cref="Player"/> has moved on to a builder.
+/// Creature is next.
 /// </summary>
 public record Creature
 {

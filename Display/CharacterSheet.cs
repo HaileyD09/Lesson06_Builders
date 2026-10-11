@@ -3,8 +3,9 @@ using TheWorld.GameMechanics;
 namespace TheWorld.Display;
 
 /// <summary>
-/// Prints character sheets.  Display lives here, beside the data, the way
-/// Lesson 3 moved it.
+/// Prints character sheets.  Display has its own namespace, TheWorld.Display,
+/// apart from the GameMechanics it prints.  A Player knows what it is, and
+/// this file knows how to show it.  That's Lesson 3's split, with an address.
 /// </summary>
 public static class CharacterSheet
 {
