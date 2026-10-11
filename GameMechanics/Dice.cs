@@ -15,38 +15,20 @@ namespace TheWorld.GameMechanics;
 /// </summary>
 public record Dice
 {
-    // Two different forms below, and the difference is on purpose.  The form
-    // you choose is a claim about how permanent the number is.
+    // ─────────────────────────────────────────────────────────────────────────
+    //  Standard Dice
+    // ─────────────────────────────────────────────────────────────────────────    
 
-    // MinSides is a `const`, because it is structural.  A random result needs
-    // at least two faces to choose between -- in this game, in a board game
-    // about trains, in any game anyone will ever write.  That number is
-    // permanent, so the compiler may as well bake it in.
-    //
-    // Worth knowing while you are here:  a const is ALREADY static.  You reach
-    // it as Dice.MinSides, straight off the type, and writing
-    // `public static const` is a compile error -- CS0504.  If you learned
-    // `static final` somewhere else, your fingers will try it exactly once.
-
-    /// <summary>The fewest sides a die may have.  Two faces is the floor for randomness.</summary>
-    public const int MinSides = 2;
-
-    // The next three are static properties, because they are house rules
-    // as opposed to structure.  They are this table's numbers, and another game
-    // would pick different ones and still be playing with dice.
-    //
-    // Written this way they can be changed, read from a config, or moved out
-    // of this type entirely.  Hold that thought; Lesson 3 moves them.
-
-    /// <summary>The most dice one roll may use.</summary>
-    public static int MaxCount => 100;
-
-    /// <summary>The most sides a die may have.</summary>
-    public static int MaxSides => 1000;
-
-    /// <summary>The largest modifier, in either direction, a roll may carry.</summary>
-    public static int MaxModifier => 20;
-
+    public static Dice Coin = new(sides: 2);
+    public static Dice D4 = new(sides: 4);
+    public static Dice D6 = new();
+    public static Dice D8 = new(sides: 8);
+    public static Dice D10 = new(sides: 10);
+    public static Dice D12 = new (sides: 12);
+    public static Dice D20 = new(sides: 20);
+    public static Dice D100 = new(sides: 100);
+    
+    
     // ─────────────────────────────────────────────────────────────────────────
     //  What a set of dice IS
     // ─────────────────────────────────────────────────────────────────────────
@@ -68,57 +50,13 @@ public record Dice
     /// The one thing that CAN call it is the factory method twenty lines below,
     /// and that is where the checking happens.
     /// </summary>
-    private Dice(int count, int sides, int modifier)
+    private Dice(int count = 1, int sides = 6, int modifier = 0)
     {
         Count = count;
         Sides = sides;
         Modifier = modifier;
     }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  The factory method -- the only way in
-    // ─────────────────────────────────────────────────────────────────────────
-
-    private static readonly int[] _validSides = 
-        [2, 4, 6, 8, 10, 12, 20, 100];
     
-    /// <summary>
-    /// Builds a set of dice, or refuses to.  The only door;  every set of dice
-    /// in the entire program comes through here.
-    /// </summary>
-    /// <param name="count">How many dice.</param>
-    /// <param name="sides">How many sides on each.</param>
-    /// <param name="modifier">A flat amount added to the total.</param>
-    public static Dice Of(int count = 1, int sides = 6, int modifier = 0)
-    {
-        // A guard clause:  check it, complain immediately, get out.  The
-        // alternative is to accept it, carry on, and fail somewhere else an
-        // hour later, with the origin of the bad value long since lost.
-        if (count < 1 || count > MaxCount)
-            throw new ArgumentOutOfRangeException(
-                nameof(count), count, $"A roll uses between 1 and {MaxCount} dice.");
-
-        if (!_validSides.Contains(sides))
-            throw new ArgumentOutOfRangeException(
-                nameof(sides), sides, $"YOU CAN'T MAKE {sides} SIDED DICE");
-        
-        if(Math.Abs(modifier) > 100)
-            throw new ArgumentOutOfRangeException(
-                nameof(modifier),modifier, $"{modifier} modifier is greater than 100");
-        
-        // TODO (Step 2): `sides` is wide open.  One side makes a token, zero
-        //                sides makes a paradox, and -4 sides makes
-        //                Random.Next() throw from deep inside the standard
-        //                library, which is a genuinely miserable way to find
-        //                out.  Use MinSides and MaxSides.
-
-        // TODO (Step 3): `modifier` is wide open too.  Use MaxModifier.
-        //                Decide for yourself whether a negative modifier is
-        //                legal -- it is, but how negative?
-
-        return new Dice(count, sides, modifier);
-    }
-
     // ─────────────────────────────────────────────────────────────────────────
     //  What a set of dice DOES
     // ─────────────────────────────────────────────────────────────────────────
@@ -134,7 +72,7 @@ public record Dice
             sum += rng.Next(1, Sides + 1);
         return sum;
     }
-
+    
     /// <summary>The smallest total these dice can produce.</summary>
     public int Minimum => Count + Modifier;
 

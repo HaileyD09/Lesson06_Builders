@@ -1,4 +1,4 @@
-namespace TheWorld.GameMechanics.StockCharacters;
+namespace TheWorld.GameMechanics.StockEntities;
 
 public static class StockPlayers
 {
