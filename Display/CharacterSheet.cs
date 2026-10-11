@@ -1,0 +1,41 @@
+using TheWorld.GameMechanics;
+
+namespace TheWorld.Display;
+
+/// <summary>
+/// Prints character sheets.  Display lives here, beside the data, the way
+/// Lesson 3 moved it.
+/// </summary>
+public static class CharacterSheet
+{
+    extension(Player player)
+    {
+        public void ShowSheet()
+        {
+            Console.WriteLine($"== {player.Name} ==  level {player.Level.Level}, {player.Level.Experience} XP");
+            Console.WriteLine($"   HP {player.HealthPoints.CurrentHealth}/{player.HealthPoints.MaxHealth}    Gold {player.MyWallet.Gold}");
+            Console.WriteLine($"   STR {Score(player.Abilities.Strength)}   DEX {Score(player.Abilities.Dexterity)}   CON {Score(player.Abilities.Constitution)}");
+            Console.WriteLine($"   INT {Score(player.Abilities.Intelligence)}   WIS {Score(player.Abilities.Wisdom)}   CHA {Score(player.Abilities.Charisma)}");
+            Console.WriteLine();
+        }
+    }
+
+    extension(Creature creature)
+    {
+        public void ShowSheet()
+        {
+            Console.WriteLine($"== {creature.Name} ==  worth {creature.ExperienceReward} XP");
+            Console.WriteLine($"   HP {creature.CurrentHealth}/{creature.MaxHealth}");
+            Console.WriteLine($"   STR {Score(creature.Strength)}   DEX {Score(creature.Dexterity)}   CON {Score(creature.Constitution)}");
+            Console.WriteLine($"   INT {Score(creature.Intelligence)}   WIS {Score(creature.Wisdom)}   CHA {Score(creature.Charisma)}");
+            Console.WriteLine();
+        }
+    }
+
+    /// <summary>A score and its modifier, the way a sheet prints it:  "14 (+2)".</summary>
+    private static string Score(int score)
+    {
+        int modifier = (score - 10) / 2;
+        return $"{score,2} ({modifier:+0;-0;+0})";
+    }
+}
