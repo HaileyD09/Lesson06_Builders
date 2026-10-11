@@ -1,6 +1,6 @@
 using TheWorld.GameMechanics;
 using TheWorld.Display;
-using TheWorld.GameMechanics.StockCharacters;
+using TheWorld.GameMechanics.StockEntities;
 using TheWorld.Rules;
 
 // The party.  Bree is the wizard;  Tamsin is the fighter.
