@@ -3,14 +3,19 @@ namespace TheWorld.GameMechanics;
 /// <summary>
 /// Builds a <see cref="Player"/> one part at a time.
 ///
-/// Each part gets its own With... method, and Build() puts the finished
-/// player together.
+/// Start from a name with FromName.  Each part gets its own With... method,
+/// and Build() puts the finished player together.  Any part you skip keeps its
+/// default.
+///
+/// The builder is a record, so every With... hands back a new copy with one
+/// part changed.  The builder you called it on is left exactly as it was.
 /// </summary>
 public record PlayerBuilder
 {
     
-    // Default Parameters for a Character ONE WAY (not necessarily a GOOD way)
-    // To guarantee that a valid Character is always created...
+    // Default values for every part of a Character.  This is ONE WAY (not
+    // necessarily a GOOD way) to guarantee that Build() always makes a valid
+    // Character...
     // TODO:  Find a better way!
     private string _name = "Frank";
     private PlayerLevel _level = PlayerLevel.Level1;
@@ -19,22 +24,21 @@ public record PlayerBuilder
     private Money _wallet = Money.Default;
 
     /// <summary>
-    /// Does Nothing except forces the user to use the provided Factory Methods
+    /// Does Nothing, except force every caller to start from one of the From... Factory Methods.
     /// </summary>
     private PlayerBuilder() { }
 
     /// <summary>
-    /// Start with a FROM method. The first natural place is the player's name.
+    /// Start with a FROM method.  The first natural place to start is the player's name.
     /// </summary>
-    /// <param name="name">Will be Validated by the built in Validation method.</param>
-    /// <returns></returns>
-    public static PlayerBuilder FromName(string name) => new PlayerBuilder { _name = ValidateName(name) };
+    /// <param name="name">Checked by ValidateName, at the bottom of this file.</param>
+    public static PlayerBuilder FromName(string name) => new() { _name = ValidateName(name) };
 
     //------------------------------------------------------------------------------------
     // With methods are how we "Build" the Player from its constituent parts.
-    // Blindly handing the values to the class is the most basic way to do this and is 
-    // Indistinguishable from the Factory method we wrote previously.  
-    // This means, we can do better!
+    // Blindly handing the values to the class is the most basic way to do this,
+    // and it checks no more than the Factory method we wrote in Lesson 5.
+    // Which means we can do better!
     //------------------------------------------------------------------------------------
     
     public PlayerBuilder WithLevel(PlayerLevel level) => this with { _level = level };
@@ -50,27 +54,25 @@ public record PlayerBuilder
     
     #region Future Projects!
     /// <summary>
-    /// TODO:  Research:  JSON Serialization of Objects.  
+    /// TODO:  Research:  JSON Serialization of Objects.
     /// </summary>
-    /// <param name="jsonString"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static PlayerBuilder FromJson(string jsonString) => throw new NotImplementedException("Not yet implemented");
+    /// <exception cref="NotImplementedException">Always, for now.</exception>
+    public static PlayerBuilder FromJson(string jsonString) => 
+        throw new NotImplementedException("Not yet implemented");
     
     /// <summary>
-    /// Use Pattern Matching to make sure the chosen name is Valid
-    /// The `.Trim()` method used here gets rid of any leading or trailing White-Space characters.
-    /// So, this handles the invalid name case of `null` as well as "                 ".
+    /// Use Pattern Matching to make sure the chosen name is Valid.
+    /// `string.IsNullOrWhiteSpace` catches `null`, "", and "                 " all in one case.
+    /// The `.Trim()` method gets rid of any leading or trailing White-Space characters.
     /// TODO:  Add more cases to this switch statement to catch other possible invalid names.
-    /// TODO:  Research:  Use "Regular Expressions" to validate a player name can ONLY be made up of
-    /// Alphabet characters and valid punctuation inside of the name.
+    /// TODO:  Research:  Use "Regular Expressions" to validate that a player name is made up ONLY of
+    /// Alphabet characters, with valid punctuation inside the name.
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <returns>The trimmed name, or "Frank" when there's nothing there but White-Space.</returns>
     private static string ValidateName(string name) =>
-        name.Trim() switch
+        name switch
         {
-            null or "" => "Frank",
+            var n when string.IsNullOrWhiteSpace(n) => "Frank",
             _ => name.Trim()
         };
     #endregion

@@ -17,7 +17,7 @@ lesson is built on:
 | File | What it is |
 |---|---|
 | `GameMechanics/PlayerBuilder.cs` | **Today's file.**  Builds a `Player` one part at a time, starting from a name. |
-| `GameMechanics/StockCharacters/StockPlayers.cs` | Bree and Tamsin, put together with the builder. |
+| `GameMechanics/StockEntities/StockPlayers.cs` | Bree and Tamsin, put together with the builder. |
 | `GameMechanics/Player.cs` | A player, made of parts since Lesson 5.  It has two doors now.  Find both. |
 | `GameMechanics/Dice.cs` | Back from Lesson 2, with a few changes.  Read the factory again before you use it. |
 | `GameMechanics/Creature.cs` | Still flat in this starter.  Yours has your Lesson 5 homework in it. |
@@ -29,7 +29,7 @@ lesson is built on:
 The project has a name now.  Its root namespace is `TheWorld`, and the types a
 game is made of live in `TheWorld.GameMechanics`:  dice, players, creatures,
 and the parts they're built from.  Ready-made characters get their own corner,
-`TheWorld.GameMechanics.StockCharacters`.  Every folder has the same name as
+`TheWorld.GameMechanics.StockEntities`.  Every folder has the same name as
 its namespace, so the file tree and the code agree about where things are.
 
 That's why `Program.cs` opens with three `using` lines.  When the compiler
