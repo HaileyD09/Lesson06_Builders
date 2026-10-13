@@ -20,7 +20,7 @@ lesson is built on:
 | `GameMechanics/StockEntities/StockPlayers.cs` | Bree and Tamsin, put together with the builder. |
 | `GameMechanics/Player.cs` | A player, made of parts since Lesson 5.  It has two doors now.  Find both. |
 | `GameMechanics/Dice.cs` | Back from Lesson 2, with a few changes.  Read the factory again before you use it. |
-| `GameMechanics/Creature.cs` | Still flat in this starter.  Yours has your Lesson 5 homework in it. |
+| `GameMechanics/Creature.cs` | Made of parts now, the way we left it at the end of Lesson 5.  Still one door in. |
 | `Display/CharacterSheet.cs` | Prints a sheet. |
 | `Program.cs` | Builds the party and the goblin.  Keep it short. |
 
