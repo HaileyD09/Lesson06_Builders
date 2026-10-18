@@ -1,3 +1,5 @@
+using TheWorld.Rules;
+
 namespace TheWorld.GameMechanics;
 
 /// <summary>
@@ -86,7 +88,12 @@ public record Dice
             sum += rng.Next(1, Sides + 1);
         return sum;
     }
-
+    
+    
+    /// <summary>
+    /// Rolls the dice, using the provided roll strategy.
+    /// </summary>
+    public int Roll(Random rng, DiceRollStrategy rollStrategy) => rollStrategy(rng, this);
     
     /// <summary>The smallest total these dice can produce.</summary>
     public int Minimum => Count + Modifier;
@@ -105,4 +112,5 @@ public record Dice
         };
         return $"{Count}d{Sides}{mod}";
     }
+    
 }
