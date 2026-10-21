@@ -4,4 +4,3 @@
 global using DiceRollStrategy = System.Func<System.Random, 
     TheWorld.GameMechanics.Dice, int>;
 
-

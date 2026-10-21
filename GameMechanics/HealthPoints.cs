@@ -2,6 +2,9 @@ namespace TheWorld.GameMechanics;
 
 public record HealthPoints
 {
+    public static HealthPoints Roll(Random rng, Dice hitDice, DiceRollStrategy rollstrategy) =>
+        new(rollstrategy(rng, hitDice)) {HitDice = hitDice};
+    
     public static HealthPoints Create(int maxHealth, Dice hitDice = null!) => 
         new(maxHealth) { HitDice = hitDice ?? Dice.D4 with { Count = 2, Modifier = 2 } };
     

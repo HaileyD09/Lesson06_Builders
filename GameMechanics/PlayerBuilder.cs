@@ -48,6 +48,11 @@ public record PlayerBuilder
     public PlayerBuilder WithHealthPoints(HealthPoints hp) => this with { _healthPoints = hp };
     public PlayerBuilder WithAbilities(AbilityScore abilities) => this with { _abilities = abilities };
     public PlayerBuilder WithWallet(Money wallet) => this with { _wallet = wallet };
+
+    public PlayerBuilder WithHealthPoints(Random rng, Dice hitDice) => this with
+    {
+        _healthPoints = HealthPoints.Roll(rng, hitDice, ClampRoll(3, hitDice.Maximum))
+    };
     
     /// <summary>
     /// Here's the traditional hard-core way to do this.
