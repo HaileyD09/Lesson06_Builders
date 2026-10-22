@@ -13,15 +13,15 @@ var bree = StockPlayers.Bree;
 var tamsin = StockPlayers.Tamsin;
 
 // What they're up against.
-var goblin = Creature.Create("Goblin", 7, 7, 8, 14, 10, 10, 8, 8, 50);
+var goblin = StockCreatures.Goblin;
+
+var dragon = StockCreatures.Dragon;
+
+var skeleton = StockCreatures.Skeleton;
 
 var start = PlayerBuilder.FromName("Hero");
 var rookie = start.Build();
 var veteran = start.WithLevel(PlayerLevel.FromExperience(500)).Build();
-
-bree.ShowSheet();
-tamsin.ShowSheet();
-goblin.ShowSheet();
 
 Console.WriteLine($"Tamsin swings at the goblin:  {tamsin.AttackBonus:+0;-0;+0} to hit, against AC {goblin.ArmorClass}.");
 Console.WriteLine($"The goblin swings back:  {goblin.AttackBonus:+0;-0;+0} to hit, against AC {tamsin.ArmorClass}.");
@@ -36,3 +36,22 @@ PlayerBuilder.FromName("Lucky")
 PlayerBuilder.FromName("LuckyWeak")
     .WithAbilities(rng, Dice.Coin, Disadvantage)
     .Build().ShowSheet();
+    
+var player = PlayerBuilder
+    .FromName("Kyroki")
+    .WithHealthPoints(rng, Dice.D6 with { Count = 2, Modifier = 1 })
+    .WithAbilities(rng, Dice.D20, ClampRoll(strategy: Advantage))
+    .WithWallet(Money.Roll(rng, Dice.D100, Default))
+    .Build();
+
+//for (int i = 0; i < 20; i++)
+//{
+    //Console.WriteLine(ClampRoll(strategy: Advantage)(rng, Dice.D20));
+//}
+
+bree.ShowSheet();
+tamsin.ShowSheet();
+goblin.ShowSheet();
+player.ShowSheet();
+dragon.ShowSheet();
+skeleton.ShowSheet();

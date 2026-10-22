@@ -49,10 +49,16 @@ public record PlayerBuilder
     public PlayerBuilder WithAbilities(AbilityScore abilities) => this with { _abilities = abilities };
     public PlayerBuilder WithWallet(Money wallet) => this with { _wallet = wallet };
 
+    /// <summary>
+    /// Life is more exciting when you've got randomness in play.
+    /// Rolls the hit dice for max health, using ClampRoll's rules:  anything from 3 up to the
+    /// most those dice can roll.
+    /// </summary>
     public PlayerBuilder WithHealthPoints(Random rng, Dice hitDice) => this with
-    {
-        _healthPoints = HealthPoints.Roll(rng, hitDice, ClampRoll(3, hitDice.Maximum))
-    };
+        { _healthPoints = HealthPoints.Roll(rng, hitDice, ClampRoll(3, hitDice.Maximum)) };
+    
+    public PlayerBuilder WithMoney(Random rng, Dice hitDice) => this with
+        { _wallet = Money.Roll(rng, hitDice, ClampRoll(3, hitDice.Maximum)) };
     
     /// <summary>
     /// Here's the traditional hard-core way to do this.

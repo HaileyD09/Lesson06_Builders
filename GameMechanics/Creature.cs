@@ -58,4 +58,8 @@ public record Creature
             creatureStats,
             experienceReward);
     }
+    
+    internal static Creature Create(string name, HealthPoints healthPoints,
+        AbilityScore abilityScore, int experienceReward) => new(name, healthPoints, abilityScore, experienceReward);
+    
 }
